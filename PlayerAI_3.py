@@ -22,7 +22,6 @@ class PlayerAI(BaseAI):
         else:
             depth = 2
         
-        
         if len(moves)!= 0:
             max_alpha = float('-inf')
             min_beta = float('inf')
@@ -41,7 +40,28 @@ class PlayerAI(BaseAI):
         return max_move    
 
 
-    
+    def terminate(self, grid, depth ):
+        state = False
+        
+        if depth < 0:
+            state = True
+            
+        elif len(grid.getAvailableMoves()) == 0 or len(grid.getAvailableCells())==0:
+            state = True
+            
+        return state
+
+   
+               
+                    
+
+
+                
+                
+
+
+
+
 
 
 
