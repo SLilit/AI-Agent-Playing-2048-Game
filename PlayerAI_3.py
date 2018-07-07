@@ -51,13 +51,30 @@ class PlayerAI(BaseAI):
             
         return state
 
-   
-               
-                    
+    def maximize(self, grid, alpha, beta, depth):
+ 
+        if self.terminate(grid, depth):
+            score = self.heruistic(grid)
+            return score
+        
+        moves = grid.getAvailableMoves()
+        alpha = float("-inf")
+        
+        for move in moves:
+            gridCopy = grid.clone()
+            if gridCopy.canMove([move]):
+                gridCopy.move(move)
+                score = self.minimize(gridCopy, alpha, beta, depth-1)
+                if score > alpha:
+                    alpha = score
+                if beta <= alpha:
+                    break
+        return alpha
+                
 
 
-                
-                
+
+     
 
 
 
