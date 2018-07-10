@@ -74,7 +74,47 @@ class PlayerAI(BaseAI):
 
 
 
-     
+    def minimize(self, grid, alpha, beta, depth):
+        
+        if self.terminate(grid, depth):
+            score = self.heruistic(grid)
+            return score
+        
+        cells = grid.getAvailableCells()
+        cells_frontier = set()
+        beta = float("inf") 
+        count = 0
+        for i in range(len(cells)):
+            cell = cells[randint(0,len(cells)-1)]
+            if grid.canInsert(cell) and cell not in cells_frontier:
+                cells_frontier.add(cell)
+                gridCopy = grid.clone()
+                gridCopy.insertTile(cell,self.getNewTileValue())
+                score = self.maximize(gridCopy, alpha, beta, depth-1)
+                
+                if score < beta:
+                    beta = score
+                if beta <= alpha or count > 4:
+                    break
+                count += 1
+                        
+        return beta
+    
+        
+    def getNewTileValue(self):
+        if randint(0,99) < 100 * 0.9:
+            return 2
+        else:
+            return 4
+        
+
+    
+               
+                    
+
+
+                
+                
 
 
 
