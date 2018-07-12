@@ -108,7 +108,25 @@ class PlayerAI(BaseAI):
             return 4
         
 
-    
+    def heruistic(self, grid):
+
+        score = 0
+        penalty = 0
+
+        for i in range(4):
+            for j in range(4):
+                score += grid.getCellValue((i,j))*self.points[i][j]
+
+                if grid.getCellValue((i,j+1)):
+                    penalty += abs(grid.getCellValue((i,j)) - grid.getCellValue((i,j+1)))
+                if grid.getCellValue((i,j-1)):
+                    penalty += abs(grid.getCellValue((i,j)) - grid.getCellValue((i,j-1)))
+                if grid.getCellValue((i+1,j)):
+                    penalty += abs(grid.getCellValue((i,j)) - grid.getCellValue((i+1,j)))
+                if  grid.getCellValue((i-1,j)):
+                    penalty += abs(grid.getCellValue((i,j)) - grid.getCellValue((i-1,j)))
+                        
+        return math.log2(score) - math.log2(penalty)
                
                     
 
